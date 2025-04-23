@@ -1,0 +1,8 @@
+infra/vms/.terraform
+infra/vms/.terraform.lock.hcl
+infra/vms/terraform.tfstate
+infra/vms/terraform.tfstate.backup
+infra/aks/.terraform
+infra/aks/.terraform.lock.hcl
+infra/aks/terraform.tfstate
+infra/aks/terraform.tfstate.backup".terraform/" 
