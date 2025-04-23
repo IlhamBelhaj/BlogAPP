@@ -6,3 +6,5 @@ infra/aks/.terraform
 infra/aks/.terraform.lock.hcl
 infra/aks/terraform.tfstate
 infra/aks/terraform.tfstate.backup".terraform/" 
+*.tfstate
+*.tfstate.backup

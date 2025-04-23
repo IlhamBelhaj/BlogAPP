@@ -11,7 +11,7 @@ pipeline {
     stages {
         stage('Git Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/ougabriel/full-stack-blogging-app.git'
+                git branch: 'main', url: 'https://github.com/IlhamBelhaj/BlogAPP.git'
             }
         }
         stage('Compile') {
@@ -26,8 +26,8 @@ pipeline {
         }
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('sonarqubeServer') {
-                    sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Blogging-app -Dsonar.projectKey=Blogging-app \
+                withSonarQubeEnv('SonarQubeServer') {
+                    sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=BlogApp -Dsonar.projectKey=BlogApp \
                           -Dsonar.java.binaries=target'''
                 }
             }
@@ -37,32 +37,38 @@ pipeline {
                 sh "mvn package"
             }
         }
-        stage('Publish Artifacts') {
-            steps {
-                withMaven(globalMavenSettingsConfig: 'maven-settings', jdk: 'jdk', maven: 'maven', mavenSettingsConfig: '', traceability: true) {
-                        sh "mvn deploy"
-                }
-            }
+   stage('Publish Artifacts') {
+    steps {
+        withMaven(
+            maven: 'maven',                        
+            jdk: 'jdk',                            
+            mavenSettingsConfig: 'maven-settings', 
+            traceability: true
+        ) {
+            sh "mvn deploy"
         }
+    }
+}
+
         stage('Docker Build & Tag') {
             steps {
                 script{
-                withDockerRegistry(credentialsId: 'dockerhub-cred', url: 'https://index.docker.io/v1/') {
-                sh "docker build -t ugogabriel/gab-blogging-app ."
+                withDockerRegistry(credentialsId: 'docker-hub', url: 'https://index.docker.io/v1/') {
+                sh "docker build -t ilhambelhaj/blogging-app ."
                 }
                 }
             }
         }
         stage('Trivy Image Scan') {
             steps {
-                sh "trivy image --format table -o image.html ugogabriel/gab-blogging-app:latest"
+                sh "trivy image --format table -o image.html ilhambelhaj/blogging-app:latest"
             }
         }
         stage('Docker Push Image') {
             steps {
                 script{
-                withDockerRegistry(credentialsId: 'dockerhub-cred', url: 'https://index.docker.io/v1/') {
-                    sh "docker push ugogabriel/gab-blogging-app"
+                withDockerRegistry(credentialsId: 'docker-hub', url: 'https://index.docker.io/v1/') {
+                    sh "docker push ilhambelhaj/blogging-app"
                 }
                 }
             }
@@ -85,7 +91,10 @@ pipeline {
         }
         
     }  // Closing stages
-}  // Closing pipeline
+}// Closing pipeline
+
+
+
 post {
     always {
         script {
@@ -116,7 +125,7 @@ post {
             emailext(
                 subject: "${jobName} - Build ${buildNumber} - ${pipelineStatus}",
                 body: body,
-                to: 'ougabriel@gmail.com',
+                to: 'ilhambelhaj00@gmail.com',
                 from: 'jenkins@example.com',
                 replyTo: 'jenkins@example.com',
                 mimeType: 'text/html'
