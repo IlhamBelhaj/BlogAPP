@@ -8,3 +8,4 @@ infra/aks/terraform.tfstate
 infra/aks/terraform.tfstate.backup".terraform/" 
 *.tfstate
 *.tfstate.backup
+README.md
