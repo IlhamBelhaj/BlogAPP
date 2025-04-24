@@ -2,16 +2,13 @@
 post {
     always {
         script {
-            // Get job name, build number, and pipeline status
             def jobName = env.JOB_NAME
             def buildNumber = env.BUILD_NUMBER
             def pipelineStatus = currentBuild.result ?: 'UNKNOWN'
             pipelineStatus = pipelineStatus.toUpperCase()
             
-            // Set the banner color based on the status
             def bannerColor = pipelineStatus == 'SUCCESS' ? 'green' : 'red'
 
-            // HTML body for the email
             def body = """
             <body>
                 <div style="border: 2px solid ${bannerColor}; padding: 10px;">
@@ -25,7 +22,6 @@ post {
             </body>
             """
 
-            // Send email notification
             emailext(
                 subject: "${jobName} - Build ${buildNumber} - ${pipelineStatus}",
                 body: body,
