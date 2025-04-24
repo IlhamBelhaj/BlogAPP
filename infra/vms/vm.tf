@@ -39,7 +39,7 @@ module "virtual-machine" {
   size                   = var.vm_size
   subnet_id              = module.subnet.id
   source_image_reference = var.source_image_reference
-  count                  = 4
+  count                  = 3
 
   os_disk = {
     caching              = var.os_disk.caching
@@ -71,3 +71,6 @@ module "virtual-machine" {
 output "public_ips" {
   value = azurerm_public_ip.public_ip[*].ip_address
 }
+
+
+

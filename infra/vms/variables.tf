@@ -68,7 +68,7 @@ variable "image_os" {
 variable "vm_names" {
   type        = list(string)
   description = "List of names for the virtual machines"
-  default     = ["Nexus", "SonarQube", "Jenkins", "Monitoring"]
+  default     = ["Nexus", "SonarQube", "Jenkins"]
 }
 
 variable "vm_size" {
@@ -86,19 +86,7 @@ variable "source_image_reference" {
   })
 }
 
-variable "prefix" {
-  description = "Prefix for the AKS cluster name"
-}
 
 
-variable "agents_max_count" {
-  description = "Maximum number of nodes in a pool"
-  type        = number
-}
-
-variable "agents_min_count" {
-  description = "Minimum number of nodes in a pool"
-  type        = number
-}
 
 
