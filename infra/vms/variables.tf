@@ -68,7 +68,7 @@ variable "image_os" {
 variable "vm_names" {
   type        = list(string)
   description = "List of names for the virtual machines"
-  default     = ["Nexus", "SonarQube", "Jenkins"]
+  default     = ["Nexus", "SonarQube", "Jenkins", "Monitoring"]
 }
 
 variable "vm_size" {

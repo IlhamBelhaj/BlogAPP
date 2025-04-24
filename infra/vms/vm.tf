@@ -39,7 +39,7 @@ module "virtual-machine" {
   size                   = var.vm_size
   subnet_id              = module.subnet.id
   source_image_reference = var.source_image_reference
-  count                  = 3
+  count                  = 4
 
   os_disk = {
     caching              = var.os_disk.caching
