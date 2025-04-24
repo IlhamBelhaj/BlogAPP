@@ -74,10 +74,11 @@ pipeline {
             }
         }
       
-      /*  stage('K8s Deploy') {
+        stage('K8s Deploy') {
             steps {
                withKubeCredentials(kubectlCredentials: [[caCertificate: '', clusterName: ' devopsshack-cluster', contextName: '', credentialsId: 'k8s-token', namespace: 'webapps', serverUrl: 'https://AD1D9143EC6B3C8A72B36759FA28854D.gr7.eu-west-2.eks.amazonaws.com']]) {
-                    sh "kubectl apply -f deployment-service.yml"
+                    sh "kubectl apply -f k8s/deployment.yaml"
+                    sh "kubectl apply -f k8s/service.yaml"
                     sleep 20
                 }
             }
@@ -89,7 +90,7 @@ pipeline {
                     sh "kubectl get service"
                 }
             }
-        } */
+        } 
         
     }  
 }
