@@ -76,7 +76,7 @@ pipeline {
       
         stage('K8s Deploy') {
             steps {
-               withKubeCredentials(kubectlCredentials: [[caCertificate: '', clusterName: ' devopsshack-cluster', contextName: '', credentialsId: 'k8s-token', namespace: 'webapps', serverUrl: 'https://AD1D9143EC6B3C8A72B36759FA28854D.gr7.eu-west-2.eks.amazonaws.com']]) {
+               withKubeCredentials(kubectlCredentials: [[caCertificate: '', clusterName: 'ilham-aks-cluster', contextName: '', credentialsId: 'kubernetes', namespace: 'webapps', serverUrl: 'https://ilham-aks-cluster-dns-0ee0xioy.hcp.westeurope.azmk8s.io:443']]) {
                     sh "kubectl apply -f k8s/deployment.yaml"
                     sh "kubectl apply -f k8s/service.yaml"
                     sleep 20
@@ -85,7 +85,7 @@ pipeline {
         }
         stage('Verify Deployment') {
             steps {
-               withKubeCredentials(kubectlCredentials: [[caCertificate: '', clusterName: 'aks-cluster-aks', contextName: '', credentialsId: 'kubernetes', namespace: 'webapps', serverUrl: '']]) {
+               withKubeCredentials(kubectlCredentials: [[caCertificate: '', clusterName: 'ilham-aks-cluster', contextName: '', credentialsId: 'kubernetes', namespace: 'webapps', serverUrl: 'https://ilham-aks-cluster-dns-0ee0xioy.hcp.westeurope.azmk8s.io:443']]) {
                     sh "kubectl get pods"
                     sh "kubectl get service"
                 }
